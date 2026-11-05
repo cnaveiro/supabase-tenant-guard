@@ -225,6 +225,7 @@ select throws_ok(
   $$ insert into projects (org_id, name)
      values ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'Intrusion') $$,
   '42501',
+  null,
   'a member cannot create a project in another organization'
 );
 
@@ -234,13 +235,8 @@ select lives_ok(
   'a member can update a project in their own organization'
 );
 
-select is(
-  (with changed as (
-    update projects set name = 'Hijacked'
-    where id = 'b0000000-0000-0000-0000-000000000001'
-    returning 1
-  ) select count(*)::int from changed),
-  0,
+select is_empty(
+  $$ update projects set name = 'Hijacked' where id = 'b0000000-0000-0000-0000-000000000001' returning 1 $$,
   'a member cannot update a project in another organization'
 );
 
@@ -252,23 +248,13 @@ select throws_ok(
   'moving a project to another organization is rejected'
 );
 
-select is(
-  (with deleted as (
-    delete from projects
-    where id = 'b0000000-0000-0000-0000-000000000001'
-    returning 1
-  ) select count(*)::int from deleted),
-  0,
+select is_empty(
+  $$ delete from projects where id = 'b0000000-0000-0000-0000-000000000001' returning 1 $$,
   'a member cannot delete a project in another organization'
 );
 
-select is(
-  (with deleted as (
-    delete from projects
-    where id = 'a0000000-0000-0000-0000-000000000001'
-    returning 1
-  ) select count(*)::int from deleted),
-  0,
+select is_empty(
+  $$ delete from projects where id = 'a0000000-0000-0000-0000-000000000001' returning 1 $$,
   'a member cannot delete a project in their own organization'
 );
 
@@ -276,26 +262,17 @@ select throws_ok(
   $$ insert into projects (org_id, name, created_by)
      values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'Forged', '33333333-3333-3333-3333-333333333333') $$,
   '42501',
+  null,
   'a member cannot attribute a project to another user'
 );
 
-select is(
-  (with changed as (
-    update organizations set name = 'Bob Inc'
-    where id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
-    returning 1
-  ) select count(*)::int from changed),
-  0,
+select is_empty(
+  $$ update organizations set name = 'Bob Inc' where id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' returning 1 $$,
   'a member cannot update the organization'
 );
 
-select is(
-  (with deleted as (
-    delete from organizations
-    where id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
-    returning 1
-  ) select count(*)::int from deleted),
-  0,
+select is_empty(
+  $$ delete from organizations where id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' returning 1 $$,
   'a member cannot delete the organization'
 );
 
@@ -312,6 +289,7 @@ select throws_ok(
   $$ insert into projects (org_id, name)
      values ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'Cross tenant') $$,
   '42501',
+  null,
   'an owner cannot create a project in another organization'
 );
 
@@ -339,17 +317,12 @@ select throws_ok(
   $$ insert into memberships (org_id, user_id, role)
      values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', 'member') $$,
   '42501',
+  null,
   'a member cannot add other members'
 );
 
-select is(
-  (with changed as (
-    update memberships set role = 'owner'
-    where org_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
-      and user_id = '22222222-2222-2222-2222-222222222222'
-    returning 1
-  ) select count(*)::int from changed),
-  0,
+select is_empty(
+  $$ update memberships set role = 'owner' where org_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' and user_id = '22222222-2222-2222-2222-222222222222' returning 1 $$,
   'a member cannot promote themselves'
 );
 
@@ -389,6 +362,7 @@ select throws_ok(
      where org_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
        and user_id = '33333333-3333-3333-3333-333333333333' $$,
   '42501',
+  null,
   'an admin cannot promote someone to owner'
 );
 
@@ -421,6 +395,7 @@ select throws_ok(
   $$ insert into memberships (org_id, user_id, role)
      values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '33333333-3333-3333-3333-333333333333', 'owner') $$,
   '42501',
+  null,
   'an admin cannot insert an owner'
 );
 
@@ -507,6 +482,7 @@ select throws_ok(
   $$ insert into memberships (org_id, user_id, role)
      values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', '11111111-1111-1111-1111-111111111111', 'member') $$,
   '42501',
+  null,
   'a former owner cannot add themselves back'
 );
 
@@ -557,6 +533,7 @@ select throws_ok('select * from public.organizations', '42501', 'an anonymous vi
 select throws_ok(
   $$ insert into public.organizations (name, slug) values ('Anon Corp', 'anon-corp') $$,
   '42501',
+  null,
   'an anonymous visitor cannot create organizations'
 );
 select throws_ok('select * from public.projects', '42501', 'an anonymous visitor cannot read projects');
