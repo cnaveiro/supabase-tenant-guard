@@ -529,14 +529,14 @@ select set_config('request.jwt.claims', '', true);
 select set_config('request.jwt.claim.sub', '', true);
 set local role anon;
 
-select throws_ok('select * from public.organizations', '42501', 'an anonymous visitor cannot read organizations');
+select throws_ok('select * from public.organizations', '42501', null, 'an anonymous visitor cannot read organizations');
 select throws_ok(
   $$ insert into public.organizations (name, slug) values ('Anon Corp', 'anon-corp') $$,
   '42501',
   null,
   'an anonymous visitor cannot create organizations'
 );
-select throws_ok('select * from public.projects', '42501', 'an anonymous visitor cannot read projects');
+select throws_ok('select * from public.projects', '42501', null, 'an anonymous visitor cannot read projects');
 
 reset role;
 select * from finish();
