@@ -1,0 +1,17 @@
+entregas-opencode/
+PROMPT-OPENCODE.md
+opencode.json
+.env
+.env.local
+node_modules/
+__pycache__/
+.venv/
+dist/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+supabase/.branches/
+supabase/.temp/
+supabase/.env
+

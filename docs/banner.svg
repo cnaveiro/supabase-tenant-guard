@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
+  <title id="title">supabase-tenant-guard</title>
+  <desc id="desc">A shield with a lock next to the project name, and three isolated tenant containers.</desc>
+
+  <g fill="none" stroke="#0D9488" stroke-width="6" stroke-linejoin="round">
+    <path d="M120 66 L172 87 V129 C172 166 151 193 120 208 C89 193 68 166 68 129 V87 Z" />
+  </g>
+  <g fill="none" stroke="#0D9488" stroke-width="5" stroke-linecap="round">
+    <rect x="104" y="118" width="32" height="26" rx="5" />
+    <path d="M112 118 V108 A8 8 0 0 1 128 108 V118" />
+  </g>
+  <circle cx="120" cy="131" r="3.5" fill="#0D9488" />
+
+  <text x="220" y="132" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="-1" fill="#64748B">supabase-tenant-guard</text>
+  <text x="222" y="174" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="22" fill="#64748B">Multi-tenant Row-Level Security you can prove, not just hope.</text>
+
+  <g font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" fill="#64748B">
+    <rect x="222" y="203" width="118" height="30" rx="15" fill="none" stroke="#64748B" stroke-opacity="0.55" />
+    <text x="281" y="223" text-anchor="middle">Postgres 15</text>
+    <rect x="352" y="203" width="102" height="30" rx="15" fill="none" stroke="#64748B" stroke-opacity="0.55" />
+    <text x="403" y="223" text-anchor="middle">Supabase</text>
+    <rect x="466" y="203" width="82" height="30" rx="15" fill="none" stroke="#64748B" stroke-opacity="0.55" />
+    <text x="507" y="223" text-anchor="middle">pgTAP</text>
+  </g>
+
+  <line x1="760" y1="66" x2="760" y2="238" stroke="#64748B" stroke-opacity="0.35" stroke-dasharray="4 7" />
+
+  <g font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+    <rect x="812" y="78" width="310" height="48" rx="12" fill="#0D9488" fill-opacity="0.12" stroke="#0D9488" stroke-opacity="0.85" />
+    <text x="836" y="108" font-size="16" fill="#64748B">Acme Corp</text>
+    <circle cx="1090" cy="102" r="4" fill="#0D9488" />
+
+    <rect x="812" y="142" width="310" height="48" rx="12" fill="#6366F1" fill-opacity="0.12" stroke="#6366F1" stroke-opacity="0.8" />
+    <text x="836" y="172" font-size="16" fill="#64748B">Globex</text>
+    <circle cx="1090" cy="166" r="4" fill="#6366F1" />
+
+    <rect x="812" y="206" width="310" height="48" rx="12" fill="#64748B" fill-opacity="0.1" stroke="#64748B" stroke-opacity="0.55" />
+    <text x="836" y="236" font-size="16" fill="#64748B">another tenant</text>
+    <circle cx="1090" cy="230" r="4" fill="#64748B" />
+  </g>
+</svg>
